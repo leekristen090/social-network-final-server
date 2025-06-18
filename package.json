@@ -1,0 +1,32 @@
+{
+  "name": "social-network-final-server",
+  "version": "1.0.0",
+  "description": "Node.js HTTP Web server for Social Network Final Project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/leekristen090/social-network-final-server.git"
+  },
+  "keywords": [
+    "Node",
+    "REST",
+    "Server",
+    "HTTP",
+    "Web",
+    "Development",
+    "CS5610"
+  ],
+  "author": "Kristen Lee",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/leekristen090/social-network-final-server/issues"
+  },
+  "homepage": "https://github.com/leekristen090/social-network-final-server#readme",
+  "dependencies": {
+    "express": "^5.1.0",
+    "uuid": "^11.1.0"
+  }
+}
