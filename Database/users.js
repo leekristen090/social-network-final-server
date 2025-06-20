@@ -1,0 +1,48 @@
+export default [
+    {
+        _id: "123",
+        username: "booklover123",
+        password: "book123",
+        email: "reader@example.com",
+        firstName: "Jane",
+        lastName: "Doe",
+        role: "READER",
+        following: ["234", "456"],
+        bio: "Books and coffee!",
+        dob: "2000-09-18"
+    },
+    {
+        _id: "234",
+        username: "mystery_author",
+        password: "mystery123",
+        email: "author@example.com",
+        firstName: "John",
+        lastName: "Appleseed",
+        role: "AUTHOR",
+        following: ["123"],
+        bio: "Writer of mystery novels",
+        dob: "1995-05-10"
+    },
+    {
+        _id: "345",
+        username: "admin",
+        password: "admin123",
+        email: "admin@example.com",
+        firstName: "Pooh",
+        lastName: "Bear",
+        role: "ADMIN",
+        dob: "1989-11-01"
+    },
+    {
+        _id: "456",
+        username: "cozyreads789",
+        password: "booknook123",
+        email: "kangaRue@example.com",
+        firstName: "Kanga",
+        lastName: "Rue",
+        role: "READER",
+        following: ["123"],
+        bio: "Love reading on a rainy day",
+        dob: "2005-03-21"
+    }
+]
