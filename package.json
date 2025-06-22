@@ -1,10 +1,12 @@
 {
+  "type": "module",
   "name": "social-network-final-server",
   "version": "1.0.0",
   "description": "Node.js HTTP Web server for Social Network Final Project",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
@@ -26,7 +28,10 @@
   },
   "homepage": "https://github.com/leekristen090/social-network-final-server#readme",
   "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
     "express": "^5.1.0",
+    "express-session": "^1.18.1",
     "uuid": "^11.1.0"
   }
 }
