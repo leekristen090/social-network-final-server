@@ -5,6 +5,8 @@ import Hello from "./Hello.js";
 import session from "express-session";
 import "dotenv/config";
 import GoalRoutes from "./Goals/routes.js";
+import ReviewRoutes from "./Reviews/routes.js";
+import FollowingRoutes from "./Following/routes.js";
 const app = express();
 app.use(
     cors({
@@ -29,5 +31,7 @@ app.use(session(sessionOptions));
 app.use(express.json());
 AccountRoutes(app);
 GoalRoutes(app);
+ReviewRoutes(app);
+FollowingRoutes(app);
 Hello(app);
 app.listen(4000);
