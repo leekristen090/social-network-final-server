@@ -7,6 +7,9 @@ import "dotenv/config";
 import GoalRoutes from "./Goals/routes.js";
 import ReviewRoutes from "./Reviews/routes.js";
 import FollowingRoutes from "./Following/routes.js";
+import mongoose from "mongoose";
+const CONNECTION_STRING = process.env.MONGO_CONNECTION_STRING || "mongodb://127.0.0.1:27017/goodbooks";
+mongoose.connect(CONNECTION_STRING);
 const app = express();
 app.use(
     cors({

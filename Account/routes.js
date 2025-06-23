@@ -2,34 +2,57 @@ import * as dao from "./dao.js";
 // let currentUser = null;
 
 export default function AccountRoutes(app) {
-    const createUser = (req, res) => {};
-    const deleteUser = (req, res) => {};
-    const findAllUsers = (req, res) => {};
-    const findUsersById = (req, res) => {};
-    const updateUser = (req, res) => {
+    const createUser = async (req, res) => {
+        const user = await dao.createUser(req.body);
+        res.json(user);
+    };
+    const deleteUser = async (req, res) => {
+        const status = await dao.deleteUser(req.params.userId);
+        res.json(status);
+    };
+    const findAllUsers = async (req, res) => {
+        const {role, name} = req.query;
+        if (role) {
+            const users = await dao.findUsersByRole(role);
+            res.json(users);
+            return;
+        }
+        if (name) {
+            const users = await dao.findUsersByPartialName(name);
+            res.json(users);
+            return;
+        }
+        const users = await dao.findAllUsers();
+        res.json(users);
+    };
+    const findUserById = async (req, res) => {
+        const user = await dao.findUserById(req.params.userId);
+        res.json(user);
+    };
+    const updateUser = async (req, res) => {
         const userId = req.params.userId;
         const userUpdates = req.body;
         dao.updateUser(userId, userUpdates);
-        const currentUser = dao.findUserById(userId);
+        const currentUser = await dao.findUserById(userId);
         req.session["currentUser"] = currentUser;
         res.json(currentUser);
     };
-    const signup = (req, res) => {
-        const user = dao.findUserByUsername(req.body.username);
+    const signup = async (req, res) => {
+        const user = await dao.findUserByUsername(req.body.username);
         if (user) {
             res.status(400).json(
                 { message: "Username already in use" });
             return;
         }
 
-        const currentUser = dao.createUser(req.body);
+        const currentUser = await dao.createUser(req.body);
         req.session["currentUser"] = currentUser;
         res.json(currentUser);
     };
 
-    const signin = (req, res) => {
+    const signin = async (req, res) => {
         const {username, password} = req.body;
-        const currentUser = dao.findUserByCredentials(username, password);
+        const currentUser = await dao.findUserByCredentials(username, password);
         if (currentUser) {
             req.session["currentUser"] = currentUser;
             res.json(currentUser);
@@ -39,7 +62,6 @@ export default function AccountRoutes(app) {
 
     };
     const signout = (req, res) => {
-        //currentUser = null;
         req.session.destroy();
         res.sendStatus(200);
     };
@@ -54,7 +76,7 @@ export default function AccountRoutes(app) {
 
     app.post("/api/users", createUser);
     app.get("/api/users", findAllUsers);
-    app.get("/api/users/:userId", findUsersById);
+    app.get("/api/users/:userId", findUserById);
     app.put("/api/users/:userId", updateUser);
     app.delete("/api/users/:userId", deleteUser);
     app.post("/api/users/signup", signup);

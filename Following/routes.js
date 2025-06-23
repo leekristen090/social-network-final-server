@@ -6,14 +6,14 @@ export default function FollowingRoutes(app) {
         const followingList = await dao.findFollowingForUser(userId);
         res.json(followingList);
     });
-    app.post("/api/following", (req, res) => {
+    app.post("/api/following", async (req, res) => {
         const { userId, targetId } = req.body;
-        const newFollow = dao.followUser(userId, targetId);
+        const newFollow = await dao.followUser(userId, targetId);
         res.json(newFollow);
     });
-    app.delete("/api/following", (req, res) => {
+    app.delete("/api/following", async (req, res) => {
         const { userId, targetId } = req.body;
-        const success = dao.unfollowUser(userId, targetId);
+        const success = await dao.unfollowUser(userId, targetId);
         if (success) {
             res.sendStatus(200);
         } else {

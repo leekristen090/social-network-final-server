@@ -1,19 +1,20 @@
-import db from "../Database/index.js";
-import { v4 as uuidv4 } from "uuid";
+import model from "./model.js";
 
-export async function followUser(userId, targetId) {
-    const {following} = db.following;
-    const newFollowing = { _id: uuidv4(), user: userId, target: targetId};
-    db.following.push(newFollowing);
-    return newFollowing;
+export function followUser(userId, targetId) {
+    const newFollowing = {_id: `${userId}-${targetId}`, user: userId, target: targetId};
+    return model.create(newFollowing);
 }
 export async function unfollowUser(userId, targetId) {
-    const {following} = db.following;
-    // const initialLength = following.length;
-    // db.following = following.filter(f => !(f.user === userId && f.target === targetId));
-    // return initialLength !== db.following.length;
-    db.following = db.following.filter(f => !(f.user === userId && f.target === targetId));
+    return model.deleteOne({ user: userId, target: targetId });
 }
+// export async function findFollowingForUser(userId) {
+//     const following = await model.find({user: userId}).populate("target");
+//     return following.map((f) => f.target);
+//     // return model.find({ user: userId }).populate("target");
+// }
 export async function findFollowingForUser(userId) {
-    return db.following.filter(f => f.user === userId);
+    return model.find({ user: userId })
+        .populate("target", "username _id")
+        .lean()
+        .exec();
 }
