@@ -16,3 +16,7 @@ export const findUsersByPartialName = (partialName) => {
     const regex = new RegExp(partialName, "i");
     return model.find({$or: [{firstName: {$regex: regex}}, {lastName: {$regex: regex}}],});
 };
+export const adminUpdateUser = async (userId, user) => {
+    await model.updateOne({ _id: userId }, { $set: user });
+    //return model.findById(userId);
+}

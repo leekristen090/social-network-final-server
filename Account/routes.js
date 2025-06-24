@@ -30,12 +30,25 @@ export default function AccountRoutes(app) {
         res.json(user);
     };
     const updateUser = async (req, res) => {
+        // const {userId} = req.params;
+        // const userUpdates = req.body;
+        // dao.updateUser(userId, userUpdates);
+        // const currentUser = await dao.findUserById(userId);
+        // req.session["currentUser"] = currentUser;
+        // res.json(currentUser);
         const userId = req.params.userId;
         const userUpdates = req.body;
-        dao.updateUser(userId, userUpdates);
-        const currentUser = await dao.findUserById(userId);
-        req.session["currentUser"] = currentUser;
+        await dao.updateUser(userId, userUpdates);
+        const currentUser = req.session["currentUser"]
+        if (currentUser && currentUser._id === userId) {
+            req.session["currentUser"] = {...currentUser, ...userUpdates};
+        }
         res.json(currentUser);
+    };
+    const adminUpdateUser = async (req, res) => {
+        const {userId} = req.params;
+        const status = dao.adminUpdateUser(userId, req.body);
+        res.json(status);
     };
     const signup = async (req, res) => {
         const user = await dao.findUserByUsername(req.body.username);
@@ -83,4 +96,5 @@ export default function AccountRoutes(app) {
     app.post("/api/users/signin", signin);
     app.post("/api/users/signout", signout);
     app.post("/api/users/profile", profile);
+    app.put("/api/users/:userId", adminUpdateUser);
 }
