@@ -29,7 +29,8 @@ export const createReview = async (review) => {
     const newReview = {
         ...review,
         _id: uuidv4(),
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
+        bookTitle: review.bookTitle || "Unknown Book",
     };
     return model.create(newReview);
 };
